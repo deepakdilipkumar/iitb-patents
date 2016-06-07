@@ -4,35 +4,47 @@ library(readxl)
  health <- read_excel("..//data//patents.xlsx",2,skip=1)
  ict <- read_excel("..//data//patents.xlsx",3,skip=1)
  manchem <- read_excel("..//data//patents.xlsx",4,skip=1)
- other <- read_excel("..//data//patents.xlsx",5)
+ other <- read_excel("..//data//patents.xlsx",5,skip=1)
  granted <- read_excel("..//data//patents.xlsx",6,skip=1)
 
 index <- match("International Patent filed",ee[,1])
 ee <- ee[-index,1:6]
-eeInd <- ee[1:index-1,]
-eeInt <- ee[index:dim(ee)[1],]
+ee[1:index-1,7] <- "Indian"
+ee[index:dim(ee)[1],7] <- "International"
+ee[,8] <- "EE"
+names(ee)[7:8] <- c("Level","Sector")
 
 index <- match("International Patent filed",health[,1])
 health <- health[-index,1:6]
-healthInd <- health[1:index-1,]
-healthInt <- health[index:dim(health)[1],]
+health[1:index-1,7] <- "Indian"
+health[index:dim(health)[1],7] <- "International"
+health[,8] <- "Healthcare"
+names(health)[7:8] <- c("Level","Sector")
 
 index <- match("International Patent filed",ict[,1])
 ict <- ict[-index,1:6]
-ictInd <- ict[1:index-1,]
-ictInt <- ict[index:dim(ict)[1],]
+ict[1:index-1,7] <- "Indian"
+ict[index:dim(ict)[1],7] <- "International"
+ict[,8] <- "ICT"
+names(ict)[7:8] <- c("Level","Sector")
 
 index <- match("International Patent filed",manchem[,1])
 manchem <- manchem[-index,1:6]
-manchemInd <- manchem[1:index-1,]
-manchemInt <- manchem[index:dim(manchem)[1],]
+manchem[1:index-1,7] <- "Indian"
+manchem[index:dim(manchem)[1],7] <- "International"
+manchem[,8] <- "Manufacturing/Chemical"
+names(manchem)[7:8] <- c("Level","Sector")
 
 index <- match("International Patent filed",other[,1])
 other <- other[-index,1:6]
-otherInd <- other[1:index-1,]
-otherInt <- other[index:dim(other)[1],]
+other[1:index-1,7] <- "Indian"
+other[index:dim(other)[1],7] <- "International"
+other[,8] <- "other"
+names(other)[7:8] <- c("Level","Sector")
+
+filed <- rbind(ee,health,ict,manchem,other)
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
-grantedInd <- granted[1:index-1,]
-grantedInt <- granted[index:dim(granted)[1],]
+granted[1:index-1,7] <- "Indian"
+granted[index:dim(granted)[1],7] <- "International"
