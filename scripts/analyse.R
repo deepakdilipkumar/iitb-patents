@@ -4,8 +4,8 @@ library(readxl)
  health <- read_excel("..//data//patents.xlsx",2,skip=1)
  ict <- read_excel("..//data//patents.xlsx",3,skip=1)
  manchem <- read_excel("..//data//patents.xlsx",4,skip=1)
- other <- read_excel("..//data//patents.xlsx",5,skip=1)
- granted <- read_excel("..//data//patents.xlsx",6,skip=1)
+other <- read_excel("..//data//patents.xlsx",5,col_types=c("text","text","text","text","text","text"),skip=1)
+ granted <- read_excel("..//data//patents.xlsx",6,col_types=c("text","text","text","text","text","text"),skip=1)
 
 index <- match("International Patent filed",ee[,1])
 ee <- ee[-index,1:6]
@@ -39,7 +39,7 @@ index <- match("International Patent filed",other[,1])
 other <- other[-index,1:6]
 other[1:index-1,7] <- "Indian"
 other[index:dim(other)[1],7] <- "International"
-other[,8] <- "other"
+other[,8] <- "Other"
 names(other)[7:8] <- c("Level","Sector")
 
 filed <- rbind(ee,health,ict,manchem,other)
@@ -48,3 +48,4 @@ index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
 granted[1:index-1,7] <- "Indian"
 granted[index:dim(granted)[1],7] <- "International"
+print(granted[,6])
