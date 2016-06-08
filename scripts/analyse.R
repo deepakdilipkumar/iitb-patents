@@ -1,11 +1,11 @@
 library(readxl)
 
- ee <- read_excel("..//data//patents.xlsx",1,skip=1)
- health <- read_excel("..//data//patents.xlsx",2,skip=1)
- ict <- read_excel("..//data//patents.xlsx",3,skip=1)
- manchem <- read_excel("..//data//patents.xlsx",4,skip=1)
-other <- read_excel("..//data//patents.xlsx",5,col_types=c("text","text","text","text","text","text"),skip=1)
- granted <- read_excel("..//data//patents.xlsx",6,col_types=c("text","text","text","text","text","text"),skip=1)
+ ee <- read_excel("..//data//patents.xlsx",1,col_types=c("text","text","text","text","text","date","text","text"),skip=1)
+ health <- read_excel("..//data//patents.xlsx",2,col_types=c("text","text","text","text","text","date","text"),skip=1)
+ ict <- read_excel("..//data//patents.xlsx",3,col_types=c("text","text","text","text","text","date","text"),skip=1)
+ manchem <- read_excel("..//data//patents.xlsx",4,col_types=c("text","text","text","text","text","date"),skip=1)
+other <- read_excel("..//data//patents.xlsx",5,col_types=c("text","text","text","text","text","date"),skip=1)
+ granted <- read_excel("..//data//patents.xlsx",6,col_types=c("text","text","text","text","text","date"),skip=1)
 
 index <- match("International Patent filed",ee[,1])
 ee <- ee[-index,1:6]
@@ -43,6 +43,8 @@ other[,8] <- "Other"
 names(other)[7:8] <- c("Level","Sector")
 
 filed <- rbind(ee,health,ict,manchem,other)
+
+error 
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
