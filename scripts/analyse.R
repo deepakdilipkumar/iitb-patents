@@ -44,10 +44,182 @@ names(other)[7:8] <- c("Level","Sector")
 
 filed <- rbind(ee,health,ict,manchem,other)
 
-error 
+filed[,9:10]=""
+
+#names(filed)
+names(filed)[9:10]=c("Dept1","Dept2")
+
+for (index in 1:length(filed$Department)){
+	if (grepl("erospace",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Aerospace"
+		}
+		else{
+			filed$Dept2[index]="Aerospace"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("lectr",filed$Department[index])|grepl("EE",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Electrical"
+		}
+		else{
+			filed$Dept2[index]="Electrical"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("iosc",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Bio"
+		}
+		else{
+			filed$Dept2[index]="Bio"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("hemistry",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Chemistry"
+		}
+		else{
+			filed$Dept2[index]="Chemistry"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("hemical",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Chemical"
+		}
+		else{
+			filed$Dept2[index]="Chemical"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("ech",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Mechanical"
+		}
+		else{
+			filed$Dept2[index]="Mechanical"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("ivil",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Civil"
+		}
+		else{
+			filed$Dept2[index]="Civil"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("omputer",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="CSE"
+		}
+		else{
+			filed$Dept2[index]="CSE"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("etall",filed$Department[index])|grepl("MEMS"),filed$Department[index]) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="MEMS"
+		}
+		else{
+			filed$Dept2[index]="MEMS"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("hysics",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Physics"
+		}
+		else{
+			filed$Dept2[index]="Physics"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("nviron",filed$Department[index])|grepl("CESE",filed$Department[index]) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="CESE"
+		}
+		else{
+			filed$Dept2[index]="CESE"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("esource",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="CSRE"
+		}
+		else{
+			filed$Dept2[index]="CSRE"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("CTARA",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="CTARA"
+		}
+		else{
+			filed$Dept2[index]="CTARA"
+		}
+	}
+}
+
+
+for (index in 1:length(filed$Department)){
+	if (grepl("earth",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Earth Sciences"
+		}
+		else{
+			filed$Dept2[index]="Earth Sciences"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("nergy",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Energy"
+		}
+		else{
+			filed$Dept2[index]="Energy"
+		}
+	}
+}
+
+#filed$Dept1
+
+table(filed$Department)
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
 granted[1:index-1,7] <- "Indian"
 granted[index:dim(granted)[1],7] <- "International"
-print(granted[,6])
