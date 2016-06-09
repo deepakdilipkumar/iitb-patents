@@ -1,4 +1,5 @@
 library(readxl)
+library(ggplot2)
 
  ee <- read_excel("..//data//patents.xlsx",1,col_types=c("text","text","text","text","text","date","text","text"),skip=1)
  health <- read_excel("..//data//patents.xlsx",2,col_types=c("text","text","text","text","text","date","text"),skip=1)
@@ -259,9 +260,20 @@ for (index in 1:length(filed$Department)){
 	}
 }
 
-filed$Dept2
+#filed$Dept2
 
-#table(filed$Department)
+deptwise <- data.frame(table(filed$Dept1))
+deptwise
+
+extra <- data.frame(table(filed$Dept2))
+extra
+
+for (dept in extra[,1]){
+	deptwise[deptwise[,1]==dept,2]<- deptwise[deptwise[,1]==dept,2]+extra[extra[,1]==dept,2]
+} 
+
+names(deptwise)=c("Department","Count")
+ggplot(filed,aes(Dept1))+geom_bar()
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
