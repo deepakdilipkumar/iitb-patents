@@ -72,7 +72,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("iosc",filed$Department[index])) {
+	if (grepl("iosc",filed$Department[index])|grepl("SBB",filed$Department[index])) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Bio"
 		}
@@ -138,7 +138,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("etall",filed$Department[index])|grepl("MEMS"),filed$Department[index]) {
+	if (grepl("etall",filed$Department[index])|grepl("MEMS",filed$Department[index])) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="MEMS"
 		}
@@ -160,7 +160,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("nviron",filed$Department[index])|grepl("CESE",filed$Department[index]) {
+	if (grepl("nviron",filed$Department[index])|grepl("CESE",filed$Department[index])) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="CESE"
 		}
@@ -215,9 +215,53 @@ for (index in 1:length(filed$Department)){
 	}
 }
 
-#filed$Dept1
+for (index in 1:length(filed$Department)){
+	if (grepl("SOM",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="SOM"
+		}
+		else{
+			filed$Dept2[index]="SOM"
+		}
+	}
+}
 
-table(filed$Department)
+for (index in 1:length(filed$Department)){
+	if (grepl("esign",filed$Department[index])|grepl("IDC",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="IDC"
+		}
+		else{
+			filed$Dept2[index]="IDC"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("ystems",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="Syscon"
+		}
+		else{
+			filed$Dept2[index]="Syscon"
+		}
+	}
+}
+
+for (index in 1:length(filed$Department)){
+	if (grepl("TTSL",filed$Department[index])) {
+		if(filed$Dept1[index]==""){
+			filed$Dept1[index]="TTSL"
+		}
+		else{
+			filed$Dept2[index]="TTSL"
+		}
+	}
+}
+
+filed$Dept2
+
+#table(filed$Department)
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
