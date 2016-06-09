@@ -1,5 +1,6 @@
 library(readxl)
 library(ggplot2)
+library(lubridate)
 
  ee <- read_excel("..//data//patents.xlsx",1,col_types=c("text","text","text","text","text","date","text","text"),skip=1)
  health <- read_excel("..//data//patents.xlsx",2,col_types=c("text","text","text","text","text","date","text"),skip=1)
@@ -49,9 +50,10 @@ filed[,9:10]=""
 
 #names(filed)
 names(filed)[9:10]=c("Dept1","Dept2")
+names(filed)[6]="Date"
 
 for (index in 1:length(filed$Department)){
-	if (grepl("erospace",filed$Department[index])) {
+	if (grepl("aerospace",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Aerospace"
 		}
@@ -62,7 +64,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("lectr",filed$Department[index])|grepl("EE",filed$Department[index])) {
+	if (grepl("electrical",filed$Department[index], ignore.case = TRUE)|grepl("EE",filed$Department[index])) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Electrical"
 		}
@@ -73,7 +75,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("iosc",filed$Department[index])|grepl("SBB",filed$Department[index])) {
+	if (grepl("biosc",filed$Department[index], ignore.case = TRUE)|grepl("SBB",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Bio"
 		}
@@ -84,7 +86,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("hemistry",filed$Department[index])) {
+	if (grepl("chemistry",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Chemistry"
 		}
@@ -95,7 +97,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("hemical",filed$Department[index])) {
+	if (grepl("chemical",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Chemical"
 		}
@@ -106,7 +108,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("ech",filed$Department[index])) {
+	if (grepl("mech",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Mechanical"
 		}
@@ -117,7 +119,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("ivil",filed$Department[index])) {
+	if (grepl("civil",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Civil"
 		}
@@ -128,7 +130,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("omputer",filed$Department[index])) {
+	if (grepl("computer",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="CSE"
 		}
@@ -139,7 +141,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("etall",filed$Department[index])|grepl("MEMS",filed$Department[index])) {
+	if (grepl("metall",filed$Department[index], ignore.case = TRUE)|grepl("MEMS",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="MEMS"
 		}
@@ -150,7 +152,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("hysics",filed$Department[index])) {
+	if (grepl("physics",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Physics"
 		}
@@ -161,7 +163,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("nviron",filed$Department[index])|grepl("CESE",filed$Department[index])) {
+	if (grepl("environ",filed$Department[index], ignore.case = TRUE)|grepl("CESE",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="CESE"
 		}
@@ -172,7 +174,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("esource",filed$Department[index])) {
+	if (grepl("resource",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="CSRE"
 		}
@@ -183,7 +185,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("CTARA",filed$Department[index])) {
+	if (grepl("CTARA",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="CTARA"
 		}
@@ -195,7 +197,7 @@ for (index in 1:length(filed$Department)){
 
 
 for (index in 1:length(filed$Department)){
-	if (grepl("earth",filed$Department[index])) {
+	if (grepl("earth",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Earth Sciences"
 		}
@@ -206,7 +208,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("nergy",filed$Department[index])) {
+	if (grepl("energy",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Energy"
 		}
@@ -217,7 +219,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("SOM",filed$Department[index])) {
+	if (grepl("SOM",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="SOM"
 		}
@@ -228,7 +230,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("esign",filed$Department[index])|grepl("IDC",filed$Department[index])) {
+	if (grepl("design",filed$Department[index], ignore.case = TRUE)|grepl("IDC",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="IDC"
 		}
@@ -239,7 +241,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("ystems",filed$Department[index])) {
+	if (grepl("system",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Syscon"
 		}
@@ -250,7 +252,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("TTSL",filed$Department[index])) {
+	if (grepl("TTSL",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="TTSL"
 		}
@@ -263,17 +265,17 @@ for (index in 1:length(filed$Department)){
 #filed$Dept2
 
 deptwise <- data.frame(table(filed$Dept1))
-deptwise
 
 extra <- data.frame(table(filed$Dept2))
-extra
 
 for (dept in extra[,1]){
 	deptwise[deptwise[,1]==dept,2]<- deptwise[deptwise[,1]==dept,2]+extra[extra[,1]==dept,2]
 } 
 
 names(deptwise)=c("Department","Count")
-ggplot(filed,aes(Dept1))+geom_bar()
+deptwise <- deptwise[-1,]  #Remove blank entries
+
+ggplot(filed,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
