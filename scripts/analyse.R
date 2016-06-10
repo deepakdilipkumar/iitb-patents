@@ -275,7 +275,10 @@ for (dept in extra[,1]){
 names(deptwise)=c("Department","Count")
 deptwise <- deptwise[-1,]  #Remove blank entries
 
-ggplot(filed,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
+deptplot <- deptwise[,2]
+names(deptplot) <- deptwise[,1]
+barplot(deptplot)
+#ggplot(filed,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
