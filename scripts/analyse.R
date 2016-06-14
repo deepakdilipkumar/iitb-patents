@@ -277,10 +277,31 @@ deptwise <- deptwise[-1,]  #Remove blank entries
 
 deptplot <- deptwise[,2]
 names(deptplot) <- deptwise[,1]
-barplot(deptplot)
-#ggplot(filed,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
+#barplot(deptplot)
+
+#filedbar <- filed
+#filedbar$Dept1 <- filedbar$Dept2
+#filedbar <- rbind(filed,filedbar)
+
+#ggplot(filedbar,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
 
 index <- match("International Patent Grant",granted[,1])
 granted <- granted[-index,1:6]
 granted[1:index-1,7] <- "Indian"
 granted[index:dim(granted)[1],7] <- "International"
+
+granted <- data.frame(granted[1:167,])
+filed <- data.frame(filed)
+
+
+count=0
+for (index1 in 1:length(granted$Title)){
+	for (index2 in 1:length(filed$Title)){
+		if (grepl(granted$Title[index1],filed$Title[index2],ignore.case=TRUE)){
+			count <- count+1
+			granted[index1,8] <- as.period(date(granted[index2,6])-date(filed[index1,6]))
+		}
+	}
+}
+
+granted[,8]
