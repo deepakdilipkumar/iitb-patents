@@ -262,10 +262,13 @@ for (index in 1:length(filed$Department)){
 	}
 }
 
-#filed$Dept2
+filed[,11] <- year(date(filed[,6]))
+filed[,12] <- month(date(filed[,6]))
+names(filed)[11:12] <- c("Year","Month")
+granted <- data.frame(granted[1:167,])
+filed <- data.frame(filed)
 
 deptwise <- data.frame(table(filed$Dept1))
-
 extra <- data.frame(table(filed$Dept2))
 
 for (dept in extra[,1]){
@@ -274,14 +277,14 @@ for (dept in extra[,1]){
 
 names(deptwise)=c("Department","Count")
 deptwise <- deptwise[-1,]  #Remove blank entries
-
 deptplot <- deptwise[,2]
 names(deptplot) <- deptwise[,1]
-#barplot(deptplot)
 
-#filedbar <- filed
-#filedbar$Dept1 <- filedbar$Dept2
-#filedbar <- rbind(filed,filedbar)
+filedbar <- filed
+filedbar$Dept1 <- filedbar$Dept2
+filedbar <- rbind(filed,filedbar)
+oldfiled<-filed
+filed<-filedbar
 
 #ggplot(filedbar,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
 
@@ -290,16 +293,19 @@ granted <- granted[-index,1:6]
 granted[1:index-1,7] <- "Indian"
 granted[index:dim(granted)[1],7] <- "International"
 
-filed[,11] <- year(date(filed[,6]))
-filed[,12] <- month(date(filed[,6]))
-names(filed)[11:12] <- c("Year","Month")
-granted <- data.frame(granted[1:167,])
-filed <- data.frame(filed)
+png("..//output//Deptwise across years.png")
+dat=filed[filed$Year>2009&filed$Year<2016&!is.na(filed$Year)&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"|filed$Dept1=="Energy"|filed$Dept1=="Civil"|filed$Dept1=="CSE"),]
+ggplot(dat,aes(x=Dept1))+geom_bar(stat="count")+facet_wrap(~Year,nrow=2)+theme(axis.text.x=element_text(angle=45))+labs(x="Department")
+#qplot(Dept1,data=filed[filed$Year>2009&filed$Year<2016&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"),],facets=Year~2)
+dev.off()
 
-qplot(Dept1,data=filed[filed$Year>2009&filed$Year<2016&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"),],facets=Year~2)
+pdf("..//output//all.pdf")
+ggplot(filed[filed$Dept1!="",],aes(x=Dept1))+geom_bar(stat="count")+theme(axis.text.x=element_text(angle=45))+labs(x="Department")	
+dev.off()
 
-#qplot(Dept1,data=filed)
-str(filed)
+pdf("..//output//sectors.pdf")
+ggplot(oldfiled[oldfiled$Year>2009&oldfiled$Year<2016&!is.na(oldfiled$Year),],aes(x=Sector))+geom_bar(stat="count")+theme(axis.text.x=element_text(angle=45))+labs(x="Sector")+facet_wrap(~Year,nrow=2)
+dev.off()
 
 count=0
 #for (index1 in 1:length(granted$Title)){
