@@ -290,18 +290,24 @@ granted <- granted[-index,1:6]
 granted[1:index-1,7] <- "Indian"
 granted[index:dim(granted)[1],7] <- "International"
 
+filed[,11] <- year(date(filed[,6]))
+filed[,12] <- month(date(filed[,6]))
+names(filed)[11:12] <- c("Year","Month")
 granted <- data.frame(granted[1:167,])
 filed <- data.frame(filed)
 
+qplot(Dept1,data=filed[filed$Year>2009&filed$Year<2016&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"),],facets=Year~2)
+
+#qplot(Dept1,data=filed)
+str(filed)
 
 count=0
-for (index1 in 1:length(granted$Title)){
-	for (index2 in 1:length(filed$Title)){
-		if (grepl(granted$Title[index1],filed$Title[index2],ignore.case=TRUE)){
-			count <- count+1
-			granted[index1,8] <- as.period(date(granted[index2,6])-date(filed[index1,6]))
-		}
-	}
-}
+#for (index1 in 1:length(granted$Title)){
+#	for (index2 in 1:length(filed$Title)){
+#		if (grepl(granted$Title[index1],filed$Title[index2],ignore.case=TRUE)){
+			#granted[index1,8] <- as.period(date(granted[index2,6])-date(filed[index1,6]))
+#		}
+#	}
+#}
 
-granted[,8]
+#granted[,8]
