@@ -10,38 +10,60 @@ oldfiled<-filed
 filed<-filedbar
 #ggplot(filedbar,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
 
-pdf("..//output//Deptwise across years.pdf")
-dat=filed[filed$Year>2009&filed$Year<2016&!is.na(filed$Year)&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"|filed$Dept1=="Energy"|filed$Dept1=="Civil"|filed$Dept1=="CSE"),]
-ggplot(dat,aes(x=Dept1))+geom_bar(stat="count",fill="grey50")+facet_wrap(~Year,nrow=2)+theme(axis.text.x=element_text(angle=45))+labs(x="Department",title="Patents by Key Departments after 2009")
+png("..//output//dept comparision across years bar.png",width=800,height=700)
+dat=filed[filed$Year>2006&filed$Year<2016&!is.na(filed$Year)&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"|filed$Dept1=="Energy"|filed$Dept1=="Civil"|filed$Dept1=="CSE"),]
+ggplot(dat,aes(x=Dept1))+geom_bar(stat="count",fill="grey50")+facet_wrap(~Year,nrow=2)+theme(axis.text.x=element_text(angle=45))+labs(x="Department",title="Patents Filed by Key Departments after 2006")
 #qplot(Dept1,data=filed[filed$Year>2009&filed$Year<2016&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"),],facets=Year~2)
 dev.off()
 
-pdf("..//output//all.pdf")
-ggplot(filed[filed$Dept1!="",],aes(x=Dept1))+geom_bar(stat="count",fill="grey50")+theme(axis.text.x=element_text(angle=45))+labs(x="Department")+labs(title="All IITB Patents")
+png("..//output//all patents filed.png",width=800,height=700)
+ggplot(filed[filed$Dept1!="",],aes(x=Dept1))+geom_bar(stat="count",fill="grey50")+theme(axis.text.x=element_text(angle=45))+labs(x="Department")+labs(title="All IITB Patents Filed")
 dev.off()
 
-pdf("..//output//sectors.pdf")
-ggplot(oldfiled[oldfiled$Year>2009&oldfiled$Year<2016&!is.na(oldfiled$Year),],aes(x=Sector))+geom_bar(stat="count",fill="grey50")+theme(axis.text.x=element_text(angle=45))+
-labs(x="Sector",title="Sectorwise Patent Distribution after 2009")+facet_wrap(~Year,nrow=2)
+png("..//output//sectorwise distribution.png",width=800,height=700)
+ggplot(oldfiled[oldfiled$Year>2006&oldfiled$Year<2016&!is.na(oldfiled$Year),],aes(x=Sector))+geom_bar(stat="count",fill="grey50")+theme(axis.text.x=element_text(angle=45))+
+labs(x="Sector",title="Sectorwise Patent Filing Distribution after 2006")+facet_wrap(~Year,nrow=2)
 dev.off()
 
-pdf("..//output//level.pdf")
-ggplot(oldfiled[oldfiled$Year>1999,],aes(x=Year,color=Level))+geom_line(stat="count")+labs(title="Patents Filed")
+png("..//output//patents filed across years.png",width=800,height=700)
+ggplot(oldfiled,aes(x=Year,color=Level))+geom_line(stat="count")+labs(title="Patents Filed")
 dev.off()
 
-pdf("..//output//depts.pdf")
-ggplot(filed[filed$Year>1999&filed$Dept1!=""&!is.na(filed$Dept1)&filed$Dept1!="SOM"&filed$Dept1!="TTSL"&filed$Dept1!="Earth Sciences"&filed$Dept1!="CSRE"&filed$Dept1!="CTARA",],aes(x=Year))+
-geom_line(stat="count")+facet_wrap(~Dept1,ncol=3,scales="free_y")+labs(title="Patent variation across years for all departments")
+png("..//output//deptwise variation across years.png",width=800,height=700)
+ggplot(filed[filed$Dept1!=""&!is.na(filed$Dept1)&filed$Dept1!="SOM"&filed$Dept1!="TTSL"&filed$Dept1!="Earth Sciences"&filed$Dept1!="CSRE"&filed$Dept1!="CTARA",],aes(x=Year))+
+geom_line(stat="count")+facet_wrap(~Dept1,ncol=3,scales="free_y")+labs(title="Patent filing variation across years for all departments")
 dev.off()
 
-pdf("..//output//Dept sector year.pdf")
-ggplot(filed[filed$Dept1!="",],aes(x=Dept1))+geom_bar(stat="count",aes(fill=Sector))+theme(axis.text.x=element_text(angle=45))+labs(x="Department")+labs(title="All IITB Patents")
+png("..//output//sectorwise across departments.png",width=800,height=700)
+ggplot(filed[filed$Dept1!="",],aes(x=Dept1))+geom_bar(stat="count",aes(fill=Sector))+theme(axis.text.x=element_text(angle=45))+labs(x="Department")+labs(title="All IITB Patents Filed")
 dev.off()
 
-pdf("..//output//dept sector year 2.pdf")
-dat=filed[filed$Year>2009&filed$Year<2016&!is.na(filed$Year)&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"|filed$Dept1=="Energy"|filed$Dept1=="Civil"|filed$Dept1=="CSE"),]
-ggplot(dat,aes(x=Dept1))+geom_bar(stat="count",aes(fill=Sector))+facet_wrap(~Year,nrow=2)+theme(axis.text.x=element_text(angle=45))+labs(x="Department",title="Patents by Key Departments after 2009")
+png("..//output//sectorwise across departments and years.png",width=800,height=700)
+dat=filed[filed$Year>2006&filed$Year<2016&!is.na(filed$Year)&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"|filed$Dept1=="Energy"|filed$Dept1=="Civil"|filed$Dept1=="CSE"),]
+ggplot(dat,aes(x=Dept1))+geom_bar(stat="count",aes(fill=Sector))+facet_wrap(~Year,nrow=2)+theme(axis.text.x=element_text(angle=45))+labs(x="Department",title="Patents Filed by Key Departments after 2006")
 #qplot(Dept1,data=filed[filed$Year>2009&filed$Year<2016&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"),],facets=Year~2)
+dev.off()
+
+png("..//output//multidiscplinary.png",width=800,height=700)
+ggplot(oldfiled,aes(x=Year,color=Multidiscipline))+geom_line(stat="count")+labs(title="Multidisciplinary Patents Filed")
+dev.off()
+
+png("..//output//all patents granted.png",width=800,height=700)
+ggplot(granted,aes(x=Department))+geom_bar(stat="count")+labs(title="All IITB Patents Granted")+theme(axis.text.x=element_text(angle=45))
+dev.off()
+
+png("..//output//dept comparison across years line.png",width=800,height=700)
+dat=filed[filed$Year>2006&filed$Year<2016&!is.na(filed$Year)&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"),]
+ggplot(dat,aes(x=Year,color=Dept1))+geom_line(stat="count")+labs(title="Patents Filed by Key Departments after 2006")+theme(axis.text.x=element_text(angle=45))
+dev.off()
+
+png("..//output//sectorwise across years.png",width=800,height=700)
+ggplot(oldfiled,aes(x=Year,fill=Sector))+geom_bar(stat="count")+labs(title="Patents Filed in different Sectors")+theme(axis.text.x=element_text(angle=45))
+dev.off()
+
+png("..//output//sectorwise across years percentage.png",width=800,height=700)
+ggplot(oldfiled,aes(x=Year,fill=Sector))+geom_bar(aes(y=(..count..)/))+
+labs(title="Patents Filed in different Sectors")+theme(axis.text.x=element_text(angle=45))
 dev.off()
 
 count=0
