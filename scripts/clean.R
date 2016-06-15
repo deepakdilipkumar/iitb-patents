@@ -1,5 +1,4 @@
 library(readxl)
-library(ggplot2)
 library(lubridate)
 
  ee <- read_excel("..//data//patents.xlsx",1,col_types=c("text","text","text","text","text","date","text","text"),skip=1)
@@ -47,10 +46,13 @@ names(other)[7:8] <- c("Level","Sector")
 filed <- rbind(ee,health,ict,manchem,other)
 
 filed[,9:10]=""
+filed[,11]="No"
 
 #names(filed)
-names(filed)[9:10]=c("Dept1","Dept2")
+names(filed)[9:11]=c("Dept1","Dept2","Multidiscipline")
 names(filed)[6]="Date"
+
+print(table(filed$Department))
 
 for (index in 1:length(filed$Department)){
 	if (grepl("aerospace",filed$Department[index], ignore.case = TRUE)) {
@@ -59,6 +61,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Aerospace"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -70,6 +73,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Electrical"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -81,6 +85,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Bio"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -92,6 +97,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Chemistry"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -103,6 +109,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Chemical"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -114,6 +121,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Mechanical"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -125,6 +133,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Civil"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -136,6 +145,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="CSE"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -147,6 +157,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="MEMS"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -158,6 +169,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Physics"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -169,6 +181,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="CESE"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -180,6 +193,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="CSRE"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -191,6 +205,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="CTARA"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -203,6 +218,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Earth Sciences"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -214,6 +230,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Energy"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -225,6 +242,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="SOM"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -236,6 +254,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="IDC"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -247,6 +266,7 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="Syscon"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
@@ -258,15 +278,18 @@ for (index in 1:length(filed$Department)){
 		}
 		else{
 			filed$Dept2[index]="TTSL"
+			filed$Multidiscipline[index]="Yes"
 		}
 	}
 }
 
-filed[,11] <- year(date(filed[,6]))
-filed[,12] <- month(date(filed[,6]))
-names(filed)[11:12] <- c("Year","Month")
+filed[,12] <- year(date(filed[,6]))
+filed[,13] <- month(date(filed[,6]))
+names(filed)[12:13] <- c("Year","Month")
 granted <- data.frame(granted[1:167,])
 filed <- data.frame(filed)
+
+filed$Year[filed$Year<1950&!is.na(filed$Year)] <- filed$Year[filed$Year<1950&!is.na(filed$Year)]+100
 
 #deptwise <- data.frame(table(filed$Dept1))
 #extra <- data.frame(table(filed$Dept2))
