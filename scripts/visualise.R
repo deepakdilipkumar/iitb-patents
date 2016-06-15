@@ -62,10 +62,14 @@ ggplot(oldfiled,aes(x=Year,fill=Sector))+geom_bar(stat="count")+labs(title="Pate
 dev.off()
 
 png("..//output//sectorwise across years percentage.png",width=800,height=700)
-ggplot(oldfiled,aes(x=Year,fill=Sector))+geom_bar(aes(y=(..count..)/))+
+ggplot(oldfiled,aes(x=Year,fill=Sector))+geom_bar(stat="count")+
 labs(title="Patents Filed in different Sectors")+theme(axis.text.x=element_text(angle=45))
 dev.off()
 
+png("..//output//monthwise.png",width=800,height=700)
+ggplot(oldfiled[!is.na(oldfiled$Month),],aes(x=factor(Month,labels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")),fill=Sector))+
+geom_bar(stat="count")+labs(title="Patents filed by Month",x="Month")+theme(axis.text.x=element_text(angle=45))
+dev.off()
 count=0
 #for (index1 in 1:length(granted$Title)){
 #	for (index2 in 1:length(filed$Title)){

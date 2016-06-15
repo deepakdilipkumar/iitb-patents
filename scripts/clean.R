@@ -52,8 +52,6 @@ filed[,11]="No"
 names(filed)[9:11]=c("Dept1","Dept2","Multidiscipline")
 names(filed)[6]="Date"
 
-print(table(filed$Department))
-
 for (index in 1:length(filed$Department)){
 	if (grepl("aerospace",filed$Department[index], ignore.case = TRUE)) {
 		if(filed$Dept1[index]==""){
@@ -284,7 +282,7 @@ for (index in 1:length(filed$Department)){
 }
 
 filed[,12] <- year(date(filed[,6]))
-filed[,13] <- month(date(filed[,6]))
+filed[,13] <- month.abb[month(date(filed[,6]))]
 names(filed)[12:13] <- c("Year","Month")
 granted <- data.frame(granted[1:167,])
 filed <- data.frame(filed)
