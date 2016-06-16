@@ -45,12 +45,27 @@ names(other)[7:8] <- c("Level","Sector")
 
 filed <- rbind(ee,health,ict,manchem,other)
 
+names(filed)[5:6] <- c("Number","Date")
+
+index <- match("International Patent Grant",granted[,1])
+granted <- granted[-index,1:6]
+granted[1:index-1,7] <- "Indian"
+granted[index:dim(granted)[1],7] <- "International"
+granted <- granted[1:167,]
+
+granted[,8] <- ""
+names(granted)[5:8] <- c("Number","Date","Level","Sector")
+
+l1 <- length(filed$Title)
+l2 <- length(granted$Title)
+
+filed <- rbind(filed,granted)
+
 filed[,9:10]=""
 filed[,11]="No"
 
 #names(filed)
 names(filed)[9:11]=c("Dept1","Dept2","Multidiscipline")
-names(filed)[6]="Date"
 
 for (index in 1:length(filed$Department)){
 	if (grepl("aerospace",filed$Department[index], ignore.case = TRUE)) {
@@ -101,7 +116,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("chemical",filed$Department[index], ignore.case = TRUE)) {
+	if (grepl("chemical",filed$Department[index], ignore.case = TRUE)|grepl("chem engg",filed$Department[index],ignore.case=TRUE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Chemical"
 		}
@@ -222,7 +237,7 @@ for (index in 1:length(filed$Department)){
 }
 
 for (index in 1:length(filed$Department)){
-	if (grepl("energy",filed$Department[index], ignore.case = TRUE)) {
+	if (grepl("energy",filed$Department[index], ignore.case = TRUE)|grepl("ESE",filed$Department[index],ignore.case=FALSE)) {
 		if(filed$Dept1[index]==""){
 			filed$Dept1[index]="Energy"
 		}
@@ -284,11 +299,19 @@ for (index in 1:length(filed$Department)){
 filed[,12] <- year(date(filed[,6]))
 filed[,13] <- month.abb[month(date(filed[,6]))]
 names(filed)[12:13] <- c("Year","Month")
-granted <- data.frame(granted[1:167,])
-filed <- data.frame(filed)
 
 filed$Year[filed$Year<1950&!is.na(filed$Year)] <- filed$Year[filed$Year<1950&!is.na(filed$Year)]+100
 
+print(dim(filed))
+print(l1)
+print(l2)
+print(l1+l2)
+print(filed[1:l1+l2,6])
+
+granted <- data.frame(filed[l1+1:l1+l2,])
+filed <- data.frame(filed[1:l1,])
+
+#print(granted$Department)
 #deptwise <- data.frame(table(filed$Dept1))
 #extra <- data.frame(table(filed$Dept2))
 #for (dept in extra[,1]){
@@ -298,11 +321,6 @@ filed$Year[filed$Year<1950&!is.na(filed$Year)] <- filed$Year[filed$Year<1950&!is
 #deptwise <- deptwise[-1,]  #Remove blank entries
 #deptplot <- deptwise[,2]
 #names(deptplot) <- deptwise[,1]
-
-index <- match("International Patent Grant",granted[,1])
-granted <- granted[-index,1:6]
-granted[1:index-1,7] <- "Indian"
-granted[index:dim(granted)[1],7] <- "International"
 
 write.csv(filed,"..//data//filed.csv")
 write.csv(granted,"..//data//granted.csv")
