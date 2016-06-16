@@ -302,13 +302,10 @@ names(filed)[12:13] <- c("Year","Month")
 
 filed$Year[filed$Year<1950&!is.na(filed$Year)] <- filed$Year[filed$Year<1950&!is.na(filed$Year)]+100
 
-print(dim(filed))
-print(l1)
-print(l2)
-print(l1+l2)
-print(filed[1:l1+l2,6])
+l3 <- l1+1
+l4 <- l1+l2
 
-granted <- data.frame(filed[l1+1:l1+l2,])
+granted <- data.frame(filed[l3:l4,])
 filed <- data.frame(filed[1:l1,])
 
 #print(granted$Department)
@@ -322,5 +319,5 @@ filed <- data.frame(filed[1:l1,])
 #deptplot <- deptwise[,2]
 #names(deptplot) <- deptwise[,1]
 
-write.csv(filed,"..//data//filed.csv")
-write.csv(granted,"..//data//granted.csv")
+write.csv(filed,"..//data//filed.csv",row.names=FALSE)
+write.csv(granted,"..//data//granted.csv",row.names=FALSE)
