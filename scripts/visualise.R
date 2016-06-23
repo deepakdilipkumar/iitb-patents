@@ -1,4 +1,5 @@
 library(ggplot2)
+library(RColorBrewer)
 
 filed <- read.csv("..//data//filed.csv")
 granted <- read.csv("..//data//granted.csv")
@@ -8,7 +9,48 @@ filedbar$Dept1 <- filedbar$Dept2
 filedbar <- rbind(filed,filedbar)
 oldfiled<-filed
 filed<-filedbar
+
+filed <- filed[filed$Dept1!="", ]
+
 #ggplot(filedbar,aes(Dept1))+geom_bar()+ theme(axis.text.x = element_text(angle=45))
+
+
+
+dfAggregatedByYear <- aggregate(Title ~ Dept1 + Year, FUN = length, data=filed)
+colnames(dfAggregatedByYear)[3] <- 'Count'
+
+
+dfAggregatedByYear <- within(dfAggregatedByYear,
+                          Dept1 <- factor(Dept1, levels = rev(sort(unique(Dept1)))))
+
+p <- ggplot(data= dfAggregatedByYear[dfAggregatedByYear$Year>=2005 &
+                                       !dfAggregatedByYear$Dept1 %in% c('TTSL', 'SOM', 'Earth Sciences', 'CSRE' ), ],
+       aes(x = Year,
+           y = reorder(Dept1, Count, FUN = sum),
+           color = Dept1,
+           size = Count)) +
+  geom_point()
+
+p + scale_size(range = c(4, 10), breaks=c(1,5,10,25)) +
+  scale_x_continuous(breaks=2005:2015) +
+  scale_colour_hue(guide = "none") +
+  theme(legend.position="bottom") +
+  theme(panel.grid.minor = element_blank()) +
+  ylab('Department')  +
+  guides(size = guide_legend(title = "", label.position="bottom", label.hjust = 0.5))
+  
+
+
+###------------------------------------------------------------------------------------###
+
+
+
+
+
+
+
+
+
 
 png("..//output//dept comparision across years bar.png",width=800,height=700)
 dat=filed[filed$Year>2006&filed$Year<2016&!is.na(filed$Year)&(filed$Dept1=="Electrical"|filed$Dept1=="Mechanical"|filed$Dept1=="MEMS"|filed$Dept1=="Bio"|filed$Dept1=="Chemical"|filed$Dept1=="Chemistry"|filed$Dept1=="Energy"|filed$Dept1=="Civil"|filed$Dept1=="CSE"),]
