@@ -296,11 +296,14 @@ for (index in 1:length(filed$Department)){
 	}
 }
 
-filed[,12] <- year(date(filed[,6]))
-filed[,13] <- month.abb[month(date(filed[,6]))]
-names(filed)[12:13] <- c("Year","Month")
 
-filed$Year[filed$Year<1950&!is.na(filed$Year)] <- filed$Year[filed$Year<1950&!is.na(filed$Year)]+100
+filed$Date <- as.Date(filed$Date)
+filed$Date[year(filed$Date)<1950&!is.na(filed$Date)] <- filed$Date[year(filed$Date)<1950&!is.na(filed$Date)] + 36525
+
+filed$Year <-  year(filed$Date)
+filed$Month <- month(filed$Date)
+
+#filed$Year[filed$Year<1950&!is.na(filed$Year)] <- filed$Year[filed$Year<1950&!is.na(filed$Year)]+100
 
 l3 <- l1+1
 l4 <- l1+l2
